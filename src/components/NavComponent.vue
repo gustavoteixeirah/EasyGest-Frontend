@@ -40,11 +40,12 @@ const button = {
     text-align: right;
     align-items: center;
     padding:  20px 20px 20px 20px;
-    background-color: blue;
+    background-color: #1F51FF;
     color: white;
     margin: -20px -20px 0px -20px;
 }
 .appName {
+    padding-top: 5px;
     font-size: 21px;
     font-weight: 700;
     color: white;

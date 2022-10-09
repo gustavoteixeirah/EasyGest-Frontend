@@ -10,6 +10,7 @@ import LoginViewVue from './views/LoginView.vue';
 import LandingPageViewVue from './views/LandingPageView.vue';
 import RegisterViewVue from './views/RegisterView.vue';
 import ResultViewVue from './views/ResultView.vue';
+import NewServiceViewVue from './views/NewServiceView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
 
 import Vue from 'vue'
@@ -25,12 +26,13 @@ const router = createRouter({
         {path: "/register", component: RegisterViewVue},
         {path: "/result", component: ResultViewVue},
         {path: "/dashboard", component: DashboardViewVue},
+        {path: "/new-service", component: NewServiceViewVue},
     ]
 })
 
 const httpClient = new AxiosAdapter(router);
-const baseUrl = "https://easygest-backend.herokuapp.com";
-// const baseUrl = "http://localhost:8080";
+// const baseUrl = "https://easygest-backend.herokuapp.com";
+const baseUrl = "http://localhost:8080";
 const authService = new AuthServiceHttp(httpClient, baseUrl);
 const userService = new UserServiceHttp(httpClient, baseUrl);
 
