@@ -8,9 +8,11 @@ export const useAuthStore = defineStore("authStore", {
   },
   actions: {
     async login(username: string, password: string) {
+      // @ts-ignore
       this.session = await this.authService.login(username, password);
       this.session.token = "123456";
       localStorage.setItem("token", this.session.token);
+      // @ts-ignore
       this.$router.push("/dashboard");
     },
     isLoggedIn() {
@@ -24,6 +26,7 @@ export const useAuthStore = defineStore("authStore", {
     logout() {
       this.session = {};
       localStorage.removeItem("token");
+      // @ts-ignore
       this.$router.push("/login");
     },
     init () {

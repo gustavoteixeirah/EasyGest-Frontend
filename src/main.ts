@@ -4,7 +4,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import App from "./App.vue";
 import AxiosAdapter from "./infra/http/AxiosAdapter";
 import AuthServiceHttp from "./services/AuthServiceHttp";
-import BoardServiceHttp from "./services/BoardServiceHttp";
 import { useAuthStore } from "./stores/AuthStore";
 import DashboardViewVue from "./views/DashboardView.vue";
 import LoginViewVue from './views/LoginView.vue';
@@ -36,6 +35,6 @@ app.use(pinia)
 
 useAuthStore().init();
 
-app.provide("boardService", new BoardServiceHttp(httpClient, baseUrl));
+// app.provide("boardService", new BoardServiceHttp(httpClient, baseUrl));
 
 app.mount("#app");
