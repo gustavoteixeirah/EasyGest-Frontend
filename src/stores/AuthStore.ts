@@ -10,7 +10,6 @@ export const useAuthStore = defineStore("authStore", {
     async login(username: string, password: string) {
       // @ts-ignore
       this.session = await this.authService.login(username, password);
-      this.session.token = "123456";
       localStorage.setItem("token", this.session.token);
       // @ts-ignore
       this.$router.push("/dashboard");
@@ -34,6 +33,15 @@ export const useAuthStore = defineStore("authStore", {
         if (token) {
             this.session.token = token;
         }
+    },
+    async register(fullName: string, email: string, password: string): Promise<any> {
+        let username = email;
+        
+      // @ts-ignore
+        const session = await this.userService.register(fullName, username, email, password)
+        // @ts-ignore
+        this.$router.push("/result");
+        return session;
     }
   },
 });

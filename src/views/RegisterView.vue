@@ -3,31 +3,24 @@ import { ref } from "vue";
 import { useAuthStore } from "../stores/AuthStore";
 
 
-const username = ref ("")
+const fullName = ref ("")
+const email = ref ("")
 const password = ref ("")
 
 const authStore = useAuthStore();
+
 </script>
 
 
 
 <template>
     <div class="main">
-        <h2>Bem-vindo(a)!</h2>
+        <h3>Preencha os campos a seguir para realizar o seu cadastro</h3>
         <div class="loginBox">
-            <input type="text" v-model="username" placeholder="e-mail" />
-            <input type="password" v-model="password" placeholder="senha" @keyup.enter="authStore.login(username, password)" />
-            <button @click="authStore.login(username, password)">Login</button>
-        </div>
-        <div class="cadastrar">
-            <div>
-                <h4>Primeira vez aqui?</h4>
-                <h5>Clique no botão abaixo para
-                <br/> realizar o seu cadastro!</h5>
-            </div>
-            <RouterLink to="/register">
-                <button>Cadastrar</button>
-            </RouterLink>
+            <input type="text" v-model="fullName" placeholder="nome completo" />
+            <input type="text" v-model="email" placeholder="e-mail" />
+            <input type="password" v-model="password" placeholder="senha" />
+                <button @click="authStore.register(fullName, email, password)">Realizar cadastro</button>
         </div>
     </div>
 </template>
@@ -41,7 +34,8 @@ input {
     font-size: 24px;
 }
 button {
-    font-size: 21px;
+    font-size: 18px;
+    font-weight: 700;
     height: 32px;
     width: 180px;
     color: whitesmoke;

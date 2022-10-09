@@ -1,56 +1,17 @@
 <script setup lang="ts">
-import { useAuthStore } from "../stores/AuthStore";
-import Button from "./Button.vue";
 
-const authStore = useAuthStore();
-const button = {
-    text: "Login"
-}
+defineProps(["button"])
+
 </script>
 
 
 <template>
-    <div class="nav">
-        <!-- {{ authStore.session.token }} -->
-        <RouterLink class="no-decoration" to="/">
-            <div class="appName">
-           EasyGest
-        </div>
-    </RouterLink>
-        <div>
-            <b-button 
-            variant="outline-primary" 
-            @click="authStore.logout" 
-            v-if="authStore.isLoggedIn()">
-            Logout
-        </b-button>
-            <RouterLink class="no-decoration" to="/login" v-if="!authStore.isLoggedIn()">
-                <Button :button="button"></Button>
-            </RouterLink>
-        </div>
-
-    </div>
+    <button class="button-6" role="button">{{ button.text }}</button>
 </template>
 
 <style scoped>
-.nav {
-    /* background-color: cyan; */
-    display: flex;
-    justify-content: space-between;
-    text-align: right;
-    align-items: center;
-    padding:  20px 20px 20px 20px;
-    background-color: blue;
-    color: white;
-    margin: -20px -20px 0px -20px;
-}
-.appName {
-    font-size: 21px;
-    font-weight: 700;
-    color: white;
-}
 .no-decoration {
-    text-decoration: none!important;
+    text-decoration: none
 }
 /* CSS */
 .button-6 {

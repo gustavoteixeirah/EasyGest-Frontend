@@ -5,6 +5,7 @@ export default class AxiosAdapter implements HttpClient {
 
     constructor(router: any) {
         axios.interceptors.request.use((config: any) => {
+            config.headers["Access-Control-Allow-Origin"] = '*';
             const token = localStorage.getItem("token")
             if (token) {
                 config.headers["Authorization"] = `Bearer ${token}`;
