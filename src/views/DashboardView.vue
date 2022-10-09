@@ -4,7 +4,7 @@ import DashboardComponent from "../components/DashboardComponent.vue";
 
 // import { useRoute } from "vue-router";
 
-// const data: { board: Board | undefined } = reactive({ board: undefined });
+const data: { board: Board | undefined } = reactive({ board: undefined });
 
 // const route = useRoute();
 // const idBoard = parseInt(route.params.idBoard as string);

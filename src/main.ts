@@ -10,10 +10,6 @@ import DashboardViewVue from "./views/DashboardView.vue";
 import LoginViewVue from './views/LoginView.vue';
 import LandingPageViewVue from './views/LandingPageView.vue';
 
-import dotenv from "dotenv";
-// dotenv.config({ silent: process.env.NODE_ENV === 'production' });
-dotenv.config();
-
 const app = createApp(App);
 
 const router = createRouter({
@@ -26,7 +22,7 @@ const router = createRouter({
 })
 
 const httpClient = new AxiosAdapter(router);
-const baseUrl = process.env.BACKEND_URL as string;
+const baseUrl = "https://easygest-backend.herokuapp.com";
 const authService = new AuthServiceHttp(httpClient, baseUrl);
 
 const pinia = createPinia();
