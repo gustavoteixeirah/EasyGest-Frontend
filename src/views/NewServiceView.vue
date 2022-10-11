@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { inject, onMounted, reactive, ref } from "vue";
+import ServiceService from "../services/ServiceService";
 import { useAuthStore } from "../stores/AuthStore";
 
 
@@ -9,20 +10,27 @@ const duration = ref ("")
 
 const authStore = useAuthStore();
 
+let services: { services: undefined } = reactive({ services: undefined });
+
+onMounted(async () => {
+	const serviceService = inject("serviceService") as ServiceService;
+    services = await serviceService.list();
+});
 </script>
 
 
 
 <template>
     <div class="main">
+        {{services}}
         <h3>Selecione um serviço existente para editar,
              ou preencha os campos para criar um novo.</h3>
         <div class="box">
             combobox
             <input type="text" v-model="name" placeholder="nome" />
             <input type="text" v-model="price" placeholder="preço" />
-            <input type="password" v-model="duration" placeholder="duração" />
-                <button @click="">Salvar</button>
+            <input type="number" v-model="duration" placeholder="duração" />
+                <button @click="authStore.createService(name, price, duration)">Salvar</button>
         </div>
     </div>
 </template>

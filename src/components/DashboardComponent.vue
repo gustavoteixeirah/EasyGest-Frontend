@@ -5,7 +5,7 @@
 </script>
 
 <template>
-    <RouterLink to="/new-scheduling" class="no-decoration">
+    <RouterLink to="/new-service" class="no-decoration">
 
   <div class="rectangle">
     <span>Criar e Editar Serviços</span>

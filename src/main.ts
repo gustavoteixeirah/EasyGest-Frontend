@@ -14,6 +14,7 @@ import NewServiceViewVue from './views/NewServiceView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
 
 import Vue from 'vue'
+import ServiceServiceHttp from "./services/ServiceServiceHttp";
 
 
 const app = createApp(App);
@@ -35,16 +36,20 @@ const httpClient = new AxiosAdapter(router);
 const baseUrl = "http://localhost:8080";
 const authService = new AuthServiceHttp(httpClient, baseUrl);
 const userService = new UserServiceHttp(httpClient, baseUrl);
+const serviceService4Pinia = new ServiceServiceHttp(httpClient, baseUrl);
 
 const pinia = createPinia();
 pinia.use(({ store }) => {
   store.$router = router,
   store.authService = authService,
-  store.userService = userService
+  store.userService = userService,
+  store.serviceService = serviceService4Pinia
 });
 
 app.use(router)
 app.use(pinia)
+
+app.provide("serviceService", new ServiceServiceHttp(httpClient, baseUrl));
 
 useAuthStore().init();
 

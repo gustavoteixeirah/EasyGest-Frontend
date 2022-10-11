@@ -10,7 +10,7 @@ export const useAuthStore = defineStore("authStore", {
     async login(username: string, password: string) {
       // @ts-ignore
       this.session = await this.authService.login(username, password);
-      localStorage.setItem("token", this.session.token);
+      localStorage.setItem("token", this.session.access_token);
       // @ts-ignore
       this.$router.push("/dashboard");
     },
@@ -42,6 +42,22 @@ export const useAuthStore = defineStore("authStore", {
         // @ts-ignore
         this.$router.push("/result");
         return session;
+    }
+    ,
+    async createService(name: string, price: string, durationInMinutes: number): Promise<any> {
+        
+      // @ts-ignore
+        const session = await this.serviceService.create(name, price, durationInMinutes)
+        // @ts-ignore
+        this.$router.push("/result");
+        return session;
+    }
+    ,
+    async listServices(): Promise<any> {
+      // @ts-ignore
+      const session = await this.serviceService.list();
+
+      return session;
     }
   },
 });

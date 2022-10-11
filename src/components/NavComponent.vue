@@ -3,8 +3,12 @@ import { useAuthStore } from "../stores/AuthStore";
 import Button from "./Button.vue";
 
 const authStore = useAuthStore();
-const button = {
+const buttonLogin = {
     text: "Login"
+}
+
+const buttonLogout = {
+    text: "Logout"
 }
 </script>
 
@@ -17,15 +21,18 @@ const button = {
            EasyGest
         </div>
     </RouterLink>
+
+
         <div>
-            <b-button 
-            variant="outline-primary" 
+            <div
             @click="authStore.logout" 
             v-if="authStore.isLoggedIn()">
-            Logout
-        </b-button>
+            <Button :button="buttonLogout">Logout</Button>
+        </div>
+
+
             <RouterLink class="no-decoration" to="/login" v-if="!authStore.isLoggedIn()">
-                <Button :button="button"></Button>
+                <Button :button="buttonLogin"></Button>
             </RouterLink>
         </div>
 
