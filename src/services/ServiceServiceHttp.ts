@@ -6,8 +6,21 @@ export default class ServiceServiceHttp implements ServiceService {
     constructor(readonly httpClient: HttpClient, readonly baseUrl: string) {
         
     }
-    async create(name: string, price: string, durationInMinutes: number): Promise<any> {
+    async update(id: string, name: string, price: string, durationInMinutes: number): Promise<any> {
         const description = name;
+        const session = await this.httpClient.put(
+          `${this.baseUrl}/services/${id}`,
+          {
+            description,
+            price,
+            durationInMinutes,
+          }
+        );
+      return session;
+    }
+
+    async create(name: string, price: string, durationInMinutes: number): Promise<any> {
+      const description = name;
       const session = await this.httpClient.post(`${this.baseUrl}/services`, {
         description,
         price,
@@ -18,8 +31,8 @@ export default class ServiceServiceHttp implements ServiceService {
 
     async list(): Promise<any> {
         const services = await this.httpClient.get(`${this.baseUrl}/services`);
-
-        return services;
+            
+        return services.data;
     }
 
 }

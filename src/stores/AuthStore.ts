@@ -1,4 +1,5 @@
 import { defineStore } from "pinia";
+import ServiceEntity from "../entities/ServiceEntity";
 
 export const useAuthStore = defineStore("authStore", {
   state() {
@@ -55,9 +56,19 @@ export const useAuthStore = defineStore("authStore", {
     ,
     async listServices(): Promise<any> {
       // @ts-ignore
-      const session = await this.serviceService.list();
-
-      return session;
+      const data = await this.serviceService.list();
+        const services = []
+        for (const service of data) {
+          const serviceObj = new ServiceEntity(
+            service.id,
+            service.description,
+            service.price,
+            service.durationInMinutes
+          );
+          services.push(serviceObj);
+        }
+        console.log("Listing services inside authStore: ", services)
+      return services;
     }
   },
 });

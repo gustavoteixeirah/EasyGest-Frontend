@@ -1,36 +1,71 @@
 <script setup lang="ts">
+import axios from "axios";
 import { inject, onMounted, reactive, ref } from "vue";
+import ServiceEntity from "../entities/ServiceEntity";
 import ServiceService from "../services/ServiceService";
 import { useAuthStore } from "../stores/AuthStore";
 
+let data: any = reactive({});
 
-const name = ref ("")
-const price = ref ("")
-const duration = ref ("")
+const toast: any = inject('toast');
+
 
 const authStore = useAuthStore();
-
-let services: { services: undefined } = reactive({ services: undefined });
-
 onMounted(async () => {
-	const serviceService = inject("serviceService") as ServiceService;
-    services = await serviceService.list();
+    
+	const response = await axios({
+		url: "http://localhost:8080/services",
+		method: "get"
+	});
+	data.services = response.data;
+    data.services.push({description: "Novo serviço", price: "0", duration: 1})
 });
+
+function selectedOptionChanged () {
+    name.value = data.services.find(service  => service.id === selectedValue.value).description
+    price.value = data.services.find(service  => service.id === selectedValue.value).price
+    duration.value = data.services.find(service  => service.id === selectedValue.value).durationInMinutes
+}
+
+const name = ref ("")
+const price = ref("")
+const duration = ref (0)
+const selectedValue = ref ("")
+
+const serviceService = inject("serviceService") as ServiceService;
+
+
+async function salvar () {
+    if(selectedValue.value) {
+         const response =  await serviceService.update(selectedValue.value, name.value, price.value, duration.value)
+         response.status === 200
+            ? toast.success('Serviço atualizado com sucesso!')
+            : toast.error('Erro ao atualizar serviço!')
+    } else {
+        const response = await serviceService.create(name.value, price.value, duration.value)
+        toast.success('Serviço criado com sucesso!');
+    }
+}
 </script>
 
 
 
 <template>
     <div class="main">
-        {{services}}
         <h3>Selecione um serviço existente para editar,
              ou preencha os campos para criar um novo.</h3>
+        <div>
+         <select v-model="selectedValue"  @change="selectedOptionChanged">
+				<option v-for="service in data.services" 
+                v-bind:key="service.id" 
+                v-bind:value="service.id">{{ service.description }}</option>
+			</select>
+        </div>
         <div class="box">
-            combobox
             <input type="text" v-model="name" placeholder="nome" />
             <input type="text" v-model="price" placeholder="preço" />
             <input type="number" v-model="duration" placeholder="duração" />
-                <button @click="authStore.createService(name, price, duration)">Salvar</button>
+                <button @click="salvar">Salvar</button>
         </div>
     </div>
 </template>

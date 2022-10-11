@@ -21,6 +21,16 @@ export default class AxiosAdapter implements HttpClient {
             return Promise.reject(error)
         })
     }
+    async put(url: string, data: any): Promise<any> {
+        
+        const response = await axios({
+            url,
+            method: "put",
+            data
+          })
+          
+        return response;
+    }
 
     async get(url: string): Promise<any> {
 
@@ -28,7 +38,7 @@ export default class AxiosAdapter implements HttpClient {
             url,
             method: "get",
           });
-          return response.data;
+          return response;
     }
     
     async post(url: string, data: any): Promise<any> {
@@ -39,7 +49,7 @@ export default class AxiosAdapter implements HttpClient {
             data
           })
           
-        return response.data;
+        return response;
     }
 
 

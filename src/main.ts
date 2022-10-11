@@ -12,7 +12,7 @@ import RegisterViewVue from './views/RegisterView.vue';
 import ResultViewVue from './views/ResultView.vue';
 import NewServiceViewVue from './views/NewServiceView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
-
+import Toaster from '@meforma/vue-toaster';
 import Vue from 'vue'
 import ServiceServiceHttp from "./services/ServiceServiceHttp";
 
@@ -48,7 +48,7 @@ pinia.use(({ store }) => {
 
 app.use(router)
 app.use(pinia)
-
+app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 app.provide("serviceService", new ServiceServiceHttp(httpClient, baseUrl));
 
 useAuthStore().init();

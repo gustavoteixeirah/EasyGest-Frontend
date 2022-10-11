@@ -12,7 +12,7 @@ export default class UserServiceHttp implements UserService {
           `${this.baseUrl}/users`,
           { fullName, username, email, password }
         );
-        return session;
+        return session.data;
     }
     
 

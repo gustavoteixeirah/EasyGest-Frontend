@@ -13,7 +13,7 @@ export default class AuthServiceHttp implements AuthService {
                                         `${this.baseUrl}/login`,
                                         {username, password}
                                     )
-        return session;
+        return session.data;
     }
 
 
