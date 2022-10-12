@@ -65,6 +65,7 @@ export const useAuthStore = defineStore("authStore", {
             service.price,
             service.durationInMinutes
           );
+          // @ts-ignore
           services.push(serviceObj);
         }
         console.log("Listing services inside authStore: ", services)
