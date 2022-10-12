@@ -14,7 +14,7 @@ const authStore = useAuthStore();
 onMounted(async () => {
     
 	const response = await axios({
-		url: "http://localhost:8080/services",
+		url: "https://easygest-backend.herokuapp.com",
 		method: "get"
 	});
 	data.services = response.data;
