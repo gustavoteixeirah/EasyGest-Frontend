@@ -7,8 +7,6 @@ const result = {
 }
 </script>   
 
-
-
 <template>
     <ResultComponent :result="result" ></ResultComponent>
 </template>

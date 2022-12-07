@@ -11,6 +11,7 @@ import LandingPageViewVue from './views/LandingPageView.vue';
 import RegisterViewVue from './views/RegisterView.vue';
 import ResultViewVue from './views/ResultView.vue';
 import NewServiceViewVue from './views/NewServiceView.vue';
+import ServicesViewVue from './views/ServicesView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
 import Toaster from '@meforma/vue-toaster';
 import Vue from 'vue'
@@ -28,12 +29,13 @@ const router = createRouter({
         {path: "/result", component: ResultViewVue},
         {path: "/dashboard", component: DashboardViewVue},
         {path: "/new-service", component: NewServiceViewVue},
+        {path: "/services", component: ServicesViewVue},
     ]
 })
 
 const httpClient = new AxiosAdapter(router);
-const baseUrl = "https://easygest-backend.herokuapp.com";
-// const baseUrl = "http://localhost:8080";
+// const baseUrl = "https://easygest-backend.herokuapp.com";
+const baseUrl = "http://localhost:8080";
 const authService = new AuthServiceHttp(httpClient, baseUrl);
 const userService = new UserServiceHttp(httpClient, baseUrl);
 const serviceService4Pinia = new ServiceServiceHttp(httpClient, baseUrl);

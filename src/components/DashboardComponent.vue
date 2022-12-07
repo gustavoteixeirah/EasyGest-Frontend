@@ -5,13 +5,12 @@
 </script>
 
 <template>
-    <RouterLink to="/new-service" class="no-decoration">
-
-  <div class="rectangle">
-    <span>Criar e Editar Serviços</span>
-  </div>
-</RouterLink>
-
+  
+  <RouterLink to="/new-service" class="no-decoration">
+    <div class="rectangle">
+      <span>Criar e Editar Serviços</span>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>

@@ -28,8 +28,8 @@ function selectedOptionChanged () {
       // @ts-ignore
     price.value = data.services.find(service  => service.id === selectedValue.value).price
     
-      // @ts-ignore
-      duration.value = data.services.find(service  => service.id === selectedValue.value).durationInMinutes
+    // @ts-ignore
+    duration.value = data.services.find(service  => service.id === selectedValue.value).durationInMinutes
 }
 
 const name = ref ("")
