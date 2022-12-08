@@ -31,7 +31,6 @@ export default class ServiceServiceHttp implements ServiceService {
 
     async list(): Promise<any> {
         const services = await this.httpClient.get(`${this.baseUrl}/services`);
-            
         return services.data;
     }
 

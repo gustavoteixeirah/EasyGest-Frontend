@@ -1,54 +1,51 @@
 <script setup lang="ts">
+import axios from "axios";
 import { inject, onMounted, reactive, ref } from "vue";
-import ServiceService from "../services/ServiceService";
+import ProductService from "../services/ProductService";
 import { useAuthStore } from "../stores/AuthStore";
 
 let data: any = reactive({});
 
 const toast: any = inject('toast');
+const description = ref ("")
+const price = ref("")
+const selectedValue = ref ("")
+
+const productService = inject("productService") as ProductService;
 
 
 const authStore = useAuthStore();
 onMounted(async () => {
-    await loadServices();
+    await loadProducts();
 });
 
 
-async function loadServices () {
-    const response =  await serviceService.list();
+async function loadProducts () {
+    const response =  await productService.list();
     console.log(response)
-	data.services = response;
-    data.services.push({description: "Novo serviço", price: "0", duration: 1})
+	data.products = response;
+    data.products.push({description: "Novo produto", price: "0"})
 }
+
 function selectedOptionChanged () {
       // @ts-ignore
-    name.value = data.services.find(service  => service.id === selectedValue.value).description
-    
+    ddescription.value = data.products.find(product  => product.id === selectedValue.value).description
       // @ts-ignore
-    price.value = data.services.find(service  => service.id === selectedValue.value).price
-    
-    // @ts-ignore
-    duration.value = data.services.find(service  => service.id === selectedValue.value).durationInMinutes
+    price.value = data.products.find(product  => product.id === selectedValue.value).price
 }
-
-const name = ref ("")
-const price = ref("")
-const duration = ref (0)
-const selectedValue = ref ("")
-
-const serviceService = inject("serviceService") as ServiceService;
 
 
 async function salvar () {
     if(selectedValue.value) {
-         const response =  await serviceService.update(selectedValue.value, name.value, price.value, duration.value)
+         const response =  await productService.update(selectedValue.value, description.value, price.value)
          response.status === 200
-            ? toast.success('Serviço atualizado com sucesso!')
-            : toast.error('Erro ao atualizar serviço!')
+            ? toast.success('Produto atualizado com sucesso!')
+            : toast.error('Erro ao atualizar produto!');
     } else {
-        const response = await serviceService.create(name.value, price.value, duration.value)
-        toast.success('Serviço criado com sucesso!');
-        await loadServices();
+        const response = await productService.create(description.value, price.value);
+        toast.success('Produto criado com sucesso!');
+        await loadProducts();
+
     }
 }
 </script>
@@ -57,19 +54,18 @@ async function salvar () {
 
 <template>
     <div class="main">
-        <h3>Selecione um serviço existente para editar,
+        <h3>Selecione um produto existente para editar,
              ou preencha os campos para criar um novo.</h3>
         <div>
          <select v-model="selectedValue"  @change="selectedOptionChanged">
-				<option v-for="service in data.services" 
-                v-bind:key="service.id" 
-                v-bind:value="service.id">{{ service.description }}</option>
+				<option v-for="product in data.products" 
+                v-bind:key="product.id" 
+                v-bind:value="product.id">{{ product.description }}</option>
 			</select>
         </div>
         <div class="box">
-            <input type="text" v-model="name" placeholder="nome" />
+            <input type="text" v-model="description" placeholder="descrição" />
             <input type="text" v-model="price" placeholder="preço" />
-            <input type="number" v-model="duration" placeholder="duração" />
                 <button @click="salvar">Salvar</button>
         </div>
     </div>

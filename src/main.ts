@@ -11,12 +11,11 @@ import LandingPageViewVue from './views/LandingPageView.vue';
 import RegisterViewVue from './views/RegisterView.vue';
 import ResultViewVue from './views/ResultView.vue';
 import NewServiceViewVue from './views/NewServiceView.vue';
-import ServicesViewVue from './views/ServicesView.vue';
+import NewProductViewVue from './views/NewProductView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
 import Toaster from '@meforma/vue-toaster';
-import Vue from 'vue'
 import ServiceServiceHttp from "./services/ServiceServiceHttp";
-
+import ProductServiceHttp from "./services/ProductServiceHttp";
 
 const app = createApp(App);
 
@@ -29,7 +28,7 @@ const router = createRouter({
         {path: "/result", component: ResultViewVue},
         {path: "/dashboard", component: DashboardViewVue},
         {path: "/new-service", component: NewServiceViewVue},
-        {path: "/services", component: ServicesViewVue},
+        {path: "/new-product", component: NewProductViewVue},
     ]
 })
 
@@ -52,6 +51,7 @@ app.use(router)
 app.use(pinia)
 app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 app.provide("serviceService", new ServiceServiceHttp(httpClient, baseUrl));
+app.provide("productService", new ProductServiceHttp(httpClient, baseUrl));
 
 useAuthStore().init();
 

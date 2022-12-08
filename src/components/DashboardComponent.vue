@@ -11,6 +11,11 @@
       <span>Criar e Editar Serviços</span>
     </div>
   </RouterLink>
+  <RouterLink to="/new-product" class="no-decoration">
+    <div class="rectangle">
+      <span>Criar e Editar Produtos</span>
+    </div>
+  </RouterLink>
 </template>
 
 <style scoped>
