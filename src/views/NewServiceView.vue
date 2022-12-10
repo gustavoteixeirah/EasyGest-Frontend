@@ -47,9 +47,11 @@ async function salvar () {
             : toast.error('Erro ao atualizar serviço!')
     } else {
         const response = await serviceService.create(name.value, price.value, duration.value)
-        toast.success('Serviço criado com sucesso!');
-        await loadServices();
+        response.status === 201
+            ? toast.success('Serviço criado com sucesso!')
+            : toast.error('Erro ao criar o serviço!')
     }
+    await loadServices();
 }
 </script>
 

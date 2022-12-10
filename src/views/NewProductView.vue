@@ -43,10 +43,11 @@ async function salvar () {
             : toast.error('Erro ao atualizar produto!');
     } else {
         const response = await productService.create(description.value, price.value);
-        toast.success('Produto criado com sucesso!');
-        await loadProducts();
-
+         response.status === 201
+            ? toast.success('Produto criado com sucesso!')
+            : toast.error('Erro ao criar o produto!');
     }
+    await loadProducts();
 }
 </script>
 
