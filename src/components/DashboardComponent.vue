@@ -20,6 +20,13 @@
                 </div>
             </RouterLink>
         </div>
+        <div class="wrapper">
+            <RouterLink to="/available-services" class="no-decoration">
+                <div class="box">
+                    Agendar um serviço
+                </div>
+            </RouterLink>
+        </div>
     </div>
 </template>
 

@@ -22,7 +22,6 @@ onMounted(async () => {
 
 async function loadProducts () {
     const response =  await productService.list();
-    console.log(response)
 	data.products = response;
     data.products.push({description: "Novo produto", price: "0"})
 }

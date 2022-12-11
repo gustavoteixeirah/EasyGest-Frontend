@@ -12,7 +12,10 @@
         "esModuleInterop": true,
         "lib": [
             "ESNext",
-            "DOM"
+            "DOM",
+            "es5",
+            "es6",
+            "dom.iterable"
         ],
         "skipLibCheck": true,
         "allowJs": true,

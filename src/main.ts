@@ -12,6 +12,7 @@ import RegisterViewVue from './views/RegisterView.vue';
 import ResultViewVue from './views/ResultView.vue';
 import NewServiceViewVue from './views/NewServiceView.vue';
 import NewProductViewVue from './views/NewProductView.vue';
+import AvailableServicesViewVue from './views/AvailableServicesView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
 import Toaster from '@meforma/vue-toaster';
 import ServiceServiceHttp from "./services/ServiceServiceHttp";
@@ -29,6 +30,7 @@ const router = createRouter({
         {path: "/dashboard", component: DashboardViewVue},
         {path: "/new-service", component: NewServiceViewVue},
         {path: "/new-product", component: NewProductViewVue},
+        {path: "/available-services", component: AvailableServicesViewVue},
     ]
 })
 
