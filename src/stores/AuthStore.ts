@@ -8,6 +8,14 @@ export const useAuthStore = defineStore("authStore", {
     };
   },
   actions: {
+    async getSelectecServicesIds() {
+      return localStorage.getItem("selectecServicesIds");
+    },
+    async agendarSelecionarHorario(selectecServicesIds: string) {
+      localStorage.setItem("selectecServicesIds", selectecServicesIds);
+      // @ts-ignore
+      this.$router.push("/available-schedule");
+    },
     async login(username: string, password: string) {
       // @ts-ignore
       this.session = await this.authService.login(username, password);
@@ -16,12 +24,12 @@ export const useAuthStore = defineStore("authStore", {
       this.$router.push("/dashboard");
     },
     isLoggedIn() {
-        const token = localStorage.getItem("token");
-        if (token) {
-            return true;
-        } else {
-            return false;
-        }
+      const token = localStorage.getItem("token");
+      if (token) {
+        return true;
+      } else {
+        return false;
+      }
     },
     logout() {
       this.session = {};
@@ -29,47 +37,61 @@ export const useAuthStore = defineStore("authStore", {
       // @ts-ignore
       this.$router.push("/login");
     },
-    init () {
-        const token = localStorage.getItem("token");
-        if (token) {
-            this.session.token = token;
-        }
+    init() {
+      const token = localStorage.getItem("token");
+      if (token) {
+        this.session.token = token;
+      }
     },
-    async register(fullName: string, email: string, password: string): Promise<any> {
-        let username = email;
-        
+    async register(
+      fullName: string,
+      email: string,
+      password: string
+    ): Promise<any> {
+      let username = email;
+
       // @ts-ignore
-        const session = await this.userService.register(fullName, username, email, password)
-        // @ts-ignore
-        this.$router.push("/result");
-        return session;
-    }
-    ,
-    async createService(name: string, price: string, durationInMinutes: number): Promise<any> {
-        
+      const session = await this.userService.register(
+        fullName,
+        username,
+        email,
+        password
+      );
       // @ts-ignore
-        const session = await this.serviceService.create(name, price, durationInMinutes)
-        // @ts-ignore
-        this.$router.push("/result");
-        return session;
-    }
-    ,
+      this.$router.push("/result");
+      return session;
+    },
+    async createService(
+      name: string,
+      price: string,
+      durationInMinutes: number
+    ): Promise<any> {
+      // @ts-ignore
+      const session = await this.serviceService.create(
+        name,
+        price,
+        durationInMinutes
+      );
+      // @ts-ignore
+      this.$router.push("/result");
+      return session;
+    },
     async listServices(): Promise<any> {
       // @ts-ignore
       const data = await this.serviceService.list();
-        const services = []
-        for (const service of data) {
-          const serviceObj = new ServiceEntity(
-            service.id,
-            service.description,
-            service.price,
-            service.durationInMinutes
-          );
-          // @ts-ignore
-          services.push(serviceObj);
-        }
-        console.log("Listing services inside authStore: ", services)
+      const services = [];
+      for (const service of data) {
+        const serviceObj = new ServiceEntity(
+          service.id,
+          service.description,
+          service.price,
+          service.durationInMinutes
+        );
+        // @ts-ignore
+        services.push(serviceObj);
+      }
+      console.log("Listing services inside authStore: ", services);
       return services;
-    }
+    },
   },
 });

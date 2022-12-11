@@ -2,6 +2,10 @@
 import { inject, onMounted, reactive, ref } from "vue";
 import ServiceService from "../services/ServiceService";
 
+import { useAuthStore } from "../stores/AuthStore";
+
+const authStore = useAuthStore();
+
 const serviceService = inject("serviceService") as ServiceService;
 
 let data: any = reactive({});
@@ -20,15 +24,16 @@ const selectedServicesTotalPrice = ref("")
 async function selectedServicesChanged() {
     let price = 0;
     for (let serviceId of selectedServices.value) {
-        const priceFound = parseFloat(data.services.find(service  => service.id === serviceId).price);
+        const priceFound = parseFloat(data.services.find(service => service.id === serviceId).price);
         price += priceFound
     }
-    selectedServicesTotalPrice.value = price.toFixed(2);
-
+    selectedServicesTotalPrice.value = price.toFixed(2).replace(".", ",");
 }
 
-async function agendarHorario () {
-  console.log(selectedServices.value)
+async function agendarHorario() {
+    const servicesIds = String(selectedServices.value)
+    console.log("servicesIds: ", servicesIds)
+    authStore.agendarSelecionarHorario(servicesIds)
 }
 </script>
 
@@ -53,22 +58,45 @@ async function agendarHorario () {
                     <td>{{ service.description }}</td>
                     <td>R$ {{ service.price }}</td>
                     <!-- <td>{{ service.durationInMinutes }}</td> -->
-                    <input type="checkbox" 
-                    :value="service.id"
-                     v-model="selectedServices"
-                     @change="selectedServicesChanged">
+                    <input type="checkbox" :value="service.id" v-model="selectedServices"
+                        @change="selectedServicesChanged">
                 </tr>
             </tbody>
         </table>
     </div>
-    <div>
-        Soma dos serviços selecionados: R$ {{selectedServicesTotalPrice}}
-        <button @click="agendarHorario">Agendar Horário</button>
+    <div class="sumario">
+        <div>
+            Soma dos serviços selecionados: R$ {{ selectedServicesTotalPrice }}
+        </div>
+        <div>
+            <div class="box">
+                Agendar um serviço
+            </div>
+            <button @click="agendarHorario">Agendar Horário</button>
+        </div>
     </div>
+
 </template>
 
 
 <style scoped>
+.sumario {
+    padding-top: 50px;
+    padding-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+button {
+    font-size: 18px;
+    height: 32px;
+    width: 180px;
+    color: whitesmoke;
+    background-color: blue;
+    border: 0px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
