@@ -27,6 +27,13 @@
                 </div>
             </RouterLink>
         </div>
+        <div class="wrapper">
+            <RouterLink to="/history" class="no-decoration">
+                <div class="box">
+                    Histórico
+                </div>
+            </RouterLink>
+        </div>
     </div>
 </template>
 
@@ -46,14 +53,20 @@
     /* border: 5px dotted black; */
     width: 150px;
     height: 100px;
+    background-color: rgb(55, 55, 110);
+    border-radius: .5em;
+    padding: 20px;
+    margin: 1%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .box {
-    background-color: rgb(55, 55, 110);
     color: white;
-    padding: 20px;
-    border-radius: .5em;
-    margin: 1%;
+    /* padding: 20px;
+    margin: 1%; */
 }
 
 body {

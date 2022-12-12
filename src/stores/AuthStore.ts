@@ -20,9 +20,28 @@ export const useAuthStore = defineStore("authStore", {
       // @ts-ignore
       this.session = await this.authService.login(username, password);
       localStorage.setItem("token", this.session.access_token);
+
+      // @ts-ignore
+      const userData = await this.authService.getLoggedUserData();
+      localStorage.setItem("userId", userData.id);
+      localStorage.setItem("userFullName", userData.fullName);
+      localStorage.setItem("userRoles", userData.roles);
+
       // @ts-ignore
       this.$router.push("/dashboard");
     },
+    async getUserRoles() {
+    
+        return localStorage.getItem("userRoles")
+      },
+    async getUserId() {
+    
+      return localStorage.getItem("userId")
+    },
+    async getUserFullName() {
+    
+        return localStorage.getItem("userFullName")
+      },
     isLoggedIn() {
       const token = localStorage.getItem("token");
       if (token) {
@@ -42,6 +61,10 @@ export const useAuthStore = defineStore("authStore", {
       if (token) {
         this.session.token = token;
       }
+    },
+    async goToSuccessScreen(): Promise<any> {
+      // @ts-ignore
+      this.$router.push("/dashboard");
     },
     async register(
       fullName: string,
