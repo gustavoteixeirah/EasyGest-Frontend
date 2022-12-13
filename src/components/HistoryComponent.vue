@@ -1,15 +1,23 @@
 <script setup lang="ts">
 import { inject, onMounted, reactive, ref } from "vue";
 import ScheduleService from "../services/ScheduleService";
+import { useAuthStore } from "../stores/AuthStore";
+import Modal from './Modal.vue';
+
 const scheduleService = inject("scheduleService") as ScheduleService;
 
+const authStore = useAuthStore();
 let data: any = reactive({});
+
+const isModalVisible = ref(false);
+const scheduleServicesDescription = ref([""]);
+
 onMounted(async () => {
     await load();
 });
 
 async function verServicos() {
-    console.log("You see me...")
+    // await authStore.goToServicesScreen();
 }
 async function load() {
     const response = await scheduleService.list();
@@ -35,34 +43,45 @@ function formatDate(dateInput: string) {
 function formatPrice(priceInput: string) {
     return priceInput.replace(".", ",")
 }
+
+function closeModal() {
+    isModalVisible.value = false;
+}
+function showModal(servicesDescription: string[]) {
+    isModalVisible.value = true;
+    scheduleServicesDescription.value = servicesDescription;
+}
 </script>
 
 
 <template>
     <div class="main">
-    <table class="table table-bordered">
-        <tbody>
-            <tr v-for="schedule in data.schedules" :key="schedule.id">
-                <div class="linhas">
-                    <div>
+        <table class="table table-bordered">
+            <tbody>
+                <tr v-for="schedule in data.schedules" :key="schedule.id">
+                    <div class="linhas">
+                        <div>
 
-                        <td>{{ formatDate(schedule.dateTime) }}</td>
-                        <td>R$ {{ formatPrice(schedule.price) }}</td>
+                            <td>{{ formatDate(schedule.dateTime) }}</td>
+                            <td>R$ {{ formatPrice(schedule.price) }}</td>
+                        </div>
+                        <div>
+                            <button @click="showModal(schedule.servicesDescription)">Ver serviços</button>
+                        </div>
                     </div>
-                    <div>
-                        <button @click="verServicos">Ver serviços</button>
-                    </div>
-                </div>
-            </tr>
-        </tbody>
-    </table>
-                </div>
+                </tr>
+            </tbody>
+        </table>
+        <Modal :services="scheduleServicesDescription" v-show="isModalVisible" @close="closeModal" />
+
+    </div>
 </template>
 
 <style scoped>
 .main {
     padding: 20px;
 }
+
 .linhas {
     display: flex;
     justify-content: space-between;

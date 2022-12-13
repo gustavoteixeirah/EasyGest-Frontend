@@ -76,10 +76,15 @@ async function changeSelectedTimeToDisplay(date: Date) {
 async function confirmarHorario() {
     await getServicesIds();
 
+    const date = selectedTime.value
     // @ts-ignore
-    const dateTime = selectedTime.value.toISOString()
+    var isoDateTime = new Date(date.getTime() - (date.getTimezoneOffset() * 60000)).toISOString();
+    // @ts-ignore
+    const dateTime = isoDateTime
+    // const dateTime = selectedTime.value.toISOString()
     const servicesId = selectedServicesIds.value
     const customerId = await authStore.getUserId();
+
     if (dateTime && servicesId && customerId) {
         const response = await scheduleService.create(customerId, dateTime, servicesId)
 
