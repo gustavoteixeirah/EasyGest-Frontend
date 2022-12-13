@@ -1,13 +1,13 @@
 <script setup lang="ts">
+import HistoryComponent from '../components/HistoryComponent.vue';
+
 
 </script>
 
 
 
 <template>
-    <div class="main">
-        History
-    </div>
+    <HistoryComponent></HistoryComponent>
 </template>
 
 <style scoped>

@@ -4,6 +4,10 @@ import ScheduleService from "./ScheduleService";
 export default class ScheduleServiceHttp implements ScheduleService {
   constructor(readonly httpClient: HttpClient, readonly baseUrl: string) {}
 
+  async list(): Promise<any> {
+    return await this.httpClient.get(`${this.baseUrl}/schedulings/me`);
+  }
+
   async create(
     customerId: string,
     dateTime: string,
@@ -14,11 +18,7 @@ export default class ScheduleServiceHttp implements ScheduleService {
       dateTime,
       servicesId,
     });
-    console.log({
-        customerId,
-        dateTime,
-        servicesId,
-      })
+
     return session;
   }
 }
