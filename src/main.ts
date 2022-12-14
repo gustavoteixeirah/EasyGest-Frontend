@@ -62,6 +62,7 @@ app.use(Toaster).provide('toast', app.config.globalProperties.$toast);
 app.provide("serviceService", new ServiceServiceHttp(httpClient, baseUrl));
 app.provide("productService", new ProductServiceHttp(httpClient, baseUrl));
 app.provide("scheduleService", new ScheduleServiceHttp(httpClient, baseUrl));
+app.provide("userService", new UserServiceHttp(httpClient, baseUrl));
 
 useAuthStore().init();
 
