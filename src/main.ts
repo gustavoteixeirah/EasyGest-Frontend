@@ -44,8 +44,8 @@ const router = createRouter({
 })
 
 const httpClient = new AxiosAdapter(router);
-// const baseUrl = "https://easygest-backend.herokuapp.com";
-const baseUrl = "http://localhost:8080";
+const baseUrl = "https://easygest-backend.herokuapp.com";
+// const baseUrl = "http://localhost:8080";
 const authService = new AuthServiceHttp(httpClient, baseUrl);
 const userService = new UserServiceHttp(httpClient, baseUrl);
 const serviceService4Pinia = new ServiceServiceHttp(httpClient, baseUrl);
