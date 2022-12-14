@@ -1,19 +1,30 @@
 <script setup lang="ts">
+import { inject, onMounted, reactive, ref } from "vue";
+import { useAuthStore } from "../stores/AuthStore";
 
+const isLoggedIn = ref(false);
+const authStore = useAuthStore();
 
+onMounted(async () => {
+    await checkIfUserIsLoggedIn();
+});
+
+async function checkIfUserIsLoggedIn() {
+    const response = authStore.isLoggedIn();
+    isLoggedIn.value = response;
+}
 </script>
 
 
 <template>
     <div class="main">
         Landing page
-        <div class="wrapper">
+        <div v-if="isLoggedIn" class="wrapper">
             <RouterLink to="/dashboard" class="no-decoration">
                 <div class="box">
                     Dashboard
                 </div>
             </RouterLink>
-
         </div>
     </div>
 
@@ -25,6 +36,7 @@
     justify-content: center;
     margin-bottom: 20px;
 }
+
 .no-decoration {
     text-decoration: none;
 }
