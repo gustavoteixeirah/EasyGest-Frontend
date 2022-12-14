@@ -29,7 +29,8 @@ async function loadPartners() {
     data.partners = response;
     data.partners.push(
         {
-            fullName: "Novo parceiro",
+            id: "",
+            fullName: "",
             email: "",
             password: "",
             cnpj: ""
@@ -39,18 +40,17 @@ async function loadPartners() {
 
 function selectedOptionChanged() {
     // @ts-ignore
-    fullName.value = data.partners.find(product => product.id === selectedValue.value).fullName
+    fullName.value = data.partners.find(partner => partner.id === selectedValue.value).fullName
     // @ts-ignore
-    email.value = data.partners.find(product => product.id === selectedValue.value).email
+    email.value = data.partners.find(partner => partner.id === selectedValue.value).email
     // @ts-ignore
-    password.value = data.partners.find(product => product.id === selectedValue.value).password
+    password.value = data.partners.find(partner => partner.id === selectedValue.value).password
     // @ts-ignore
-    cnpj.value = data.partners.find(product => product.id === selectedValue.value).cnpj
+    cnpj.value = data.partners.find(partner => partner.id === selectedValue.value).cnpj
 }
 
-
 async function salvar() {
-    if (selectedValue.value) {
+    if (selectedValue.value && selectedValue.value != "") {
         const response = await userService.updatePartner(selectedValue.value, fullName.value, email.value, password.value, cnpj.value)
         response.status === 200
             ? toast.success('Parceiro atualizado com sucesso!')
@@ -62,6 +62,16 @@ async function salvar() {
             : toast.error('Erro ao criar o parceiro!');
     }
     await loadPartners();
+}
+
+async function deletePartner() {
+        const response = await userService.deletePartner(selectedValue.value);
+        response.status === 200
+            ? toast.success('Parceiro excluído com sucesso!')
+            : toast.error('Erro ao excluir o parceiro!');
+    await loadPartners();
+    selectedValue.value = "";
+    selectedOptionChanged()
 }
 </script>
 
@@ -79,11 +89,12 @@ async function salvar() {
             </select>
         </div>
         <div class="box">
-            <input type="text" v-model="fullName" placeholder="Nome Completo" />
+            <input type="text" v-model="fullName" placeholder="Nome" />
             <input type="text" v-model="email" placeholder="E-mail" />
             <input type="text" v-model="cnpj" placeholder="CNPJ" />
             <input type="text" v-model="password" placeholder="Senha" />
             <button @click="salvar">Salvar</button>
+            <button class="deleteBtn" @click="deletePartner">Excluir</button>
         </div>
     </div>
 </template>
@@ -95,6 +106,9 @@ input {
     height: 32px;
     width: 256px;
     font-size: 24px;
+}
+.deleteBtn {
+    background-color: brown;
 }
 
 button {

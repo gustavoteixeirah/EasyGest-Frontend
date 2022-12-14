@@ -3,6 +3,17 @@ import UserService from "./UserService";
 
 export default class UserServiceHttp implements UserService {
   constructor(readonly httpClient: HttpClient, readonly baseUrl: string) {}
+    async listUsers(): Promise<any> {
+        const session = await this.httpClient.get(`${this.baseUrl}/users/regular-users`);
+    
+        return session.data;
+    }
+    async deletePartner(id: string): Promise<any> {
+        const session = await this.httpClient.delete(
+          `${this.baseUrl}/users/${id}`,
+        );
+        return session;
+    }
   async updatePartner(
     id: string,
     fullName: string,

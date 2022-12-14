@@ -1,4 +1,8 @@
 export default interface UserService {
+  listUsers(): Promise<any>;
+
+  deletePartner(id: string): Promise<any>;
+
   updatePartner(
     id: string,
     fullName: string,

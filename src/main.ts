@@ -14,6 +14,7 @@ import NewServiceViewVue from './views/NewServiceView.vue';
 import NewProductViewVue from './views/NewProductView.vue';
 import HistoryViewVue from './views/HistoryView.vue';
 import PartnersViewVue from './views/PartnersView.vue';
+import RegularUsersViewVue from './views/RegularUsersView.vue';
 import AvailableServicesViewVue from './views/AvailableServicesView.vue';
 import AvailableScheduleViewVue from './views/AvailableScheduleView.vue';
 import UserServiceHttp from "./services/UserServiceHttp";
@@ -38,6 +39,7 @@ const router = createRouter({
         {path: "/available-schedule", component: AvailableScheduleViewVue},
         {path: "/history", component: HistoryViewVue},
         {path: "/partners", component: PartnersViewVue},
+        {path: "/users", component: RegularUsersViewVue},
     ]
 })
 

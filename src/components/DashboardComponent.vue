@@ -50,6 +50,13 @@ async function load() {
             </RouterLink>
         </div>
         <div v-if="systemAdmin" class="wrapper">
+            <RouterLink to="/users" class="no-decoration">
+                <div class="box">
+                    Gerenciamento de Usuários
+                </div>
+            </RouterLink>
+        </div>
+        <div v-if="systemAdmin" class="wrapper">
             <RouterLink to="/partners" class="no-decoration">
                 <div class="box">
                     Gerenciamento de Parceiros
