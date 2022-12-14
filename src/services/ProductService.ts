@@ -1,4 +1,5 @@
 export default interface ProductService {
+  delete(id: string): Promise<any>;
 
   create(description: string, price: string): Promise<any>;
 

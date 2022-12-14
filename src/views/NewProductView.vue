@@ -28,12 +28,24 @@ async function loadProducts () {
 
 function selectedOptionChanged () {
       // @ts-ignore
-    ddescription.value = data.products.find(product  => product.id === selectedValue.value).description
+    description.value = data.products.find(product  => product.id === selectedValue.value).description
       // @ts-ignore
     price.value = data.products.find(product  => product.id === selectedValue.value).price
 }
 
 
+async function deletarProduto () {
+         const response =  await productService.delete(selectedValue.value)
+         response.status === 200
+            ? toast.success('Produto excluído com sucesso!')
+            : toast.error('Erro ao excluir o produto!');
+      // @ts-ignore
+      description.value = ""
+      // @ts-ignore
+    price.value = ""
+    selectedValue.value = undefined
+    await loadProducts();
+}
 async function salvar () {
     if(selectedValue.value) {
          const response =  await productService.update(selectedValue.value, description.value, price.value)
@@ -67,11 +79,16 @@ async function salvar () {
             <input type="text" v-model="description" placeholder="descrição" />
             <input type="text" v-model="price" placeholder="preço" />
                 <button @click="salvar">Salvar</button>
+                <button class="deleteBtn" @click="deletarProduto">Excluir</button>
+
         </div>
     </div>
 </template>
 
 <style scoped>
+.deleteBtn {
+    background-color: brown;
+}
 input {
     background-color: lightgray;
     border: 0px;

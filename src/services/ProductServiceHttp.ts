@@ -6,6 +6,10 @@ export default class ProductServiceHttp implements ProductService {
     constructor(readonly httpClient: HttpClient, readonly baseUrl: string) {
         
     }
+    async delete(id: string): Promise<any> {
+        const response = await this.httpClient.delete(`${this.baseUrl}/products/${id}`);
+        return response;
+    }
     async update(id: string, description: string, price: string): Promise<any> {
         const session = await this.httpClient.put(
           `${this.baseUrl}/products/${id}`,
